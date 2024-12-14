@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { idb } from "@/lib/idb";
-import { User, VoteSession } from "@/lib/types";
+import type { User, VoteSession } from "@/lib/types";
 import { getErrorMessage } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -15,12 +15,11 @@ export async function createSession(user: User) {
 
 	try {
 		await db.set("sessions", newVoteSession.id, newVoteSession);
+		return newVoteSession;
 	} catch (error) {
 		const message = getErrorMessage(error);
 		toast.error(message);
 		return null;
-	} finally {
-		return newVoteSession;
 	}
 }
 
@@ -46,12 +45,11 @@ export async function createAccount(userEmail: string, userName: string, orgName
 	try {
 		await db.set("users", newUser.id, newUser);
 		await idb.set<User>("user", newUser);
+		return newUser;
 	} catch (error) {
 		const message = getErrorMessage(error);
 		toast.error(message);
 		return null;
-	} finally {
-		return newUser;
 	}
 }
 
@@ -76,12 +74,11 @@ export async function changeOrganization(
 	try {
 		await db.set("users", updatedUser.id, updatedUser);
 		await idb.set<User>("user", updatedUser);
+		return updatedUser;
 	} catch (error) {
 		const message = getErrorMessage(error);
 		toast.error(message);
 		return null;
-	} finally {
-		return updatedUser;
 	}
 }
 

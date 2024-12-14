@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { VoteSession } from "@/lib/types";
+import type { VoteSession } from "@/lib/types";
 
 export function useResults(users: VoteSession["users"]) {
 	return useMemo(() => {
@@ -7,7 +7,7 @@ export function useResults(users: VoteSession["users"]) {
 
 		const agreementRate = votedUsers.reduce(
 			(acc, user) => {
-				const voteValue = user.vote === "X" ? 0 : parseInt(user.vote, 10);
+				const voteValue = user.vote === "X" ? 0 : Number.parseInt(user.vote, 10);
 				acc[voteValue] = (acc[voteValue] || 0) + 1;
 				return acc;
 			},
@@ -15,12 +15,13 @@ export function useResults(users: VoteSession["users"]) {
 		);
 
 		const mostSelectedVote = Object.entries(agreementRate).reduce(
-			(max, [vote, count]) => (count > max.count ? { vote: parseInt(vote, 10), count } : max),
+			(max, [vote, count]) =>
+				count > max.count ? { vote: Number.parseInt(vote, 10), count } : max,
 			{ vote: 0, count: 0 },
 		);
 
 		const totalVotes = votedUsers.reduce(
-			(sum, user) => sum + (user.vote === "X" ? 0 : parseInt(user.vote, 10)),
+			(sum, user) => sum + (user.vote === "X" ? 0 : Number.parseInt(user.vote, 10)),
 			0,
 		);
 
@@ -34,7 +35,7 @@ export function useResults(users: VoteSession["users"]) {
 
 		const votesCount = Object.entries(agreementRate)
 			.filter(([vote]) => vote !== "0")
-			.map(([vote, count]) => ({ vote: parseInt(vote, 10), count }));
+			.map(([vote, count]) => ({ vote: Number.parseInt(vote, 10), count }));
 
 		return {
 			average,

@@ -1,0 +1,73 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"ignore": []
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 100
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"all": true
+			},
+			"correctness": {
+				"all": true,
+				"useImportExtensions": "off"
+			},
+			"complexity": {
+				"all": true
+			},
+			"nursery": {
+				"all": true,
+				"useExplicitType": "off",
+				"useSortedClasses": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "tw"]
+					}
+				}
+			},
+			"performance": {
+				"all": true
+			},
+			"security": {
+				"all": true
+			},
+			"style": {
+				"all": true,
+				"noDefaultExport": "off",
+				"useNamingConvention": "off",
+				"useBlockStatements": "off",
+				"noNonNullAssertion": "off"
+			},
+			"suspicious": {
+				"all": true,
+				"noReactSpecificProps": "off",
+				"noConsole": "off",
+				"noConsoleLog": "off",
+				"useErrorMessage": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	}
+}

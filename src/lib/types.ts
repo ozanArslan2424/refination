@@ -1,11 +1,11 @@
-import { z } from "zod";
-import {
-  voteOptionsSchema,
-  organizationSchema,
-  sessionUserSchema,
-  userSchema,
-  voteSessionSchema,
-  voteSessionStateSchema,
+import type { z } from "zod";
+import type {
+	voteOptionsSchema,
+	organizationSchema,
+	sessionUserSchema,
+	userSchema,
+	voteSessionSchema,
+	voteSessionStateSchema,
 } from "./schemas";
 
 export type VoteOptions = z.infer<typeof voteOptionsSchema>;

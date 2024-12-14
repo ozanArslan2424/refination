@@ -1,9 +1,9 @@
 import { get, set } from "idb-keyval";
 
-type IDBKeys = "user";
+type IdbKeys = "user";
 
 export const idb = {
-	get: async <T>(key: IDBKeys) => {
+	get: async <T>(key: IdbKeys) => {
 		const data = await get<T>(key);
 
 		if (!data) {
@@ -12,7 +12,7 @@ export const idb = {
 
 		return data;
 	},
-	set: async <T>(key: IDBKeys, value: T) => {
+	set: async <T>(key: IdbKeys, value: T) => {
 		await set(key, value);
 	},
 };
