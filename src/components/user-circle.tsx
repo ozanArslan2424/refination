@@ -1,6 +1,6 @@
+import type { SessionUser, VoteSession } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
-import type { SessionUser, VoteSession } from "@/lib/types";
 
 export function UserCircle({
 	voteSession,
@@ -57,7 +57,7 @@ export function UserCircle({
 					>
 						<div
 							className={cn(
-								"relative aspect-square h-24 rounded-full border-[5px] p-4",
+								"relative aspect-square h-24 rounded-full border-5 p-4",
 								user.vote !== "X" || voteSession.state === "results"
 									? "border-sky-700 bg-sky-700"
 									: "border-sky-100",
@@ -66,17 +66,17 @@ export function UserCircle({
 							)}
 						>
 							{user.role === "manager" && (
-								<span className="-top-6 -translate-x-1/2 absolute left-1/2 z-[3] text-5xl">👑</span>
+								<span className="-top-6 -translate-x-1/2 absolute left-1/2 z-3 text-5xl">👑</span>
 							)}
 
-							<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-[2]">
+							<div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-2">
 								<span className="text-6xl text-stone-100">
 									{renderUserAvatar(voteSession.state, user.vote, currentUser.id === user.id)}
 								</span>
 							</div>
 							<span
 								className={cn(
-									"-bottom-6 -translate-x-1/2 absolute left-1/2 z-[1] inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-primary px-2.5 py-0.5 font-semibold text-lg text-primary-foreground",
+									"-bottom-6 -translate-x-1/2 absolute left-1/2 z-1 inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-primary px-2.5 py-0.5 font-semibold text-lg text-primary-foreground",
 									"bg-sky-100 text-sky-700",
 								)}
 							>

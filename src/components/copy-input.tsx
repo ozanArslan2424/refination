@@ -31,14 +31,20 @@ export function CopyInput({
 				type="button"
 				id={copyId}
 				onClick={handleCopy}
-				className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg border border-transparent text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed"
+				className={cn(
+					"default",
+					"absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md border border-transparent text-muted-foreground transition-colors duration-75",
+					"hover:text-foreground",
+					"focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0",
+					"disabled:pointer-events-none disabled:cursor-not-allowed",
+				)}
 				aria-label={copied ? "Copied" : "Copy to clipboard"}
 				disabled={copied}
 			>
 				<div
 					className={cn("transition-all", copied ? "scale-100 opacity-100" : "scale-0 opacity-0")}
 				>
-					<CheckIcon className="stroke-emerald-500" size={16} strokeWidth={2} aria-hidden="true" />
+					<CheckIcon className="stroke-emerald-300" size={18} strokeWidth={4} aria-hidden="true" />
 				</div>
 				<div
 					className={cn(
@@ -46,7 +52,7 @@ export function CopyInput({
 						copied ? "scale-0 opacity-0" : "scale-100 opacity-100",
 					)}
 				>
-					<CopyIcon size={16} strokeWidth={2} aria-hidden="true" />
+					<CopyIcon size={18} strokeWidth={2} aria-hidden="true" />
 				</div>
 			</button>
 		</div>

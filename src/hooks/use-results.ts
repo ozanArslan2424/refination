@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import type { VoteSession } from "@/lib/types";
+import { useMemo } from "react";
 
 export function useResults(users: VoteSession["users"]) {
 	return useMemo(() => {

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import type { SessionUser, User } from "@/lib/types";
-import { idb } from "@/lib/idb";
-import { useSession } from "@/hooks/use-session";
-import { useParams } from "react-router";
+import { SessionControls } from "@/components/session-controls";
 import { TableContent } from "@/components/table-content";
 import { UserCircle } from "@/components/user-circle";
-import { SessionControls } from "@/components/session-controls";
+import { useSession } from "@/hooks/use-session";
+import { idb } from "@/lib/idb";
+import type { SessionUser, User } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 export function RefinementPage() {
 	console.count("🚀 Refinement page rendered");

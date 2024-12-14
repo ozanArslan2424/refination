@@ -65,10 +65,8 @@ export function FoundUserSection({
 					</fieldset>
 
 					<div className="pt-4">
-						<Link to={`/table/${activeSessionId}`}>
-							<button type="button" className="primary w-full">
-								Create a vote session
-							</button>
+						<Link to={`/table/${activeSessionId}`} className="button primary w-full">
+							Create a vote session
 						</Link>
 					</div>
 				</div>

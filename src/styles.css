@@ -1,11 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@plugin 'tailwindcss-animate';
+
+@variant dark (&:is(.dark *));
+
+@theme {
+	--color-background: oklch(18% 0.005 195);
+	--color-foreground: var(--color-stone-50);
+	--color-border: var(--color-stone-300);
+	--color-ring: var(--color-indigo-400);
+	--color-primary: var(--color-stone-50);
+	--color-primary-foreground: var(--color-stone-950);
+	--color-secondary: var(--color-stone-700);
+	--color-secondary-foreground: var(--color-stone-50);
+	--color-info: var(--color-sky-600);
+	--color-info-foreground: var(--color-stone-50);
+	--color-success: var(--color-emerald-600);
+	--color-success-foreground: var(--color-stone-50);
+	--color-warning: var(--color-yellow-600);
+	--color-warning-foreground: var(--color-stone-50);
+	--color-error: var(--color-rose-600);
+	--color-error-foreground: var(--color-stone-50);
+	--color-muted: var(--color-stone-700);
+	--color-muted-foreground: var(--color-stone-400);
+
+	--radius-lg: 0.5rem;
+	--radius-md: calc(0.5rem - 2px);
+	--radius-sm: calc(0.5rem - 4px);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
 @layer base {
-	* {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
 		@apply border-border ring-ring ring-offset-background;
 	}
+
 	body {
 		@apply bg-background text-foreground antialiased;
 	}
@@ -30,10 +70,6 @@
 		@apply text-2xl font-semibold;
 	}
 
-	p {
-		@apply text-base;
-	}
-
 	form {
 		@apply space-y-4;
 	}
@@ -46,13 +82,31 @@
 		@apply space-y-2;
 	}
 
-	input {
-		@apply flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-base ring-offset-background transition file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+	a,
+	button,
+	.button,
+	input,
+	select,
+	textarea,
+	[tabindex] {
+		@apply focus-visible:outline-none focus-visible:ring focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
 	}
 
-	button,
+	input:not(.default) {
+		@apply flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-base ring-offset-background transition file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground;
+
+		&::placeholder {
+			@apply text-muted-foreground;
+		}
+	}
+
+	a {
+		@apply cursor-pointer;
+	}
+
+	button:not(.default),
 	.button {
-		@apply inline-flex h-max shrink-0 cursor-pointer items-center justify-center border font-semibold tracking-wide transition disabled:cursor-not-allowed disabled:border-transparent disabled:bg-border disabled:bg-opacity-50 disabled:text-muted-foreground disabled:hover:bg-opacity-50 disabled:active:bg-opacity-50;
+		@apply inline-flex h-max shrink-0 cursor-pointer items-center justify-center border font-semibold tracking-wide transition disabled:cursor-not-allowed disabled:border-transparent disabled:bg-muted/50 disabled:text-muted-foreground;
 
 		&.primary {
 			@apply border-primary bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80;

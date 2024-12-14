@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import type { VoteSession } from "@/lib/types";
-import { toast } from "sonner";
 import { db } from "@/lib/db";
-import { useNavigate } from "react-router";
 import { voteSessionSchema } from "@/lib/schemas";
+import type { VoteSession } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function useSession(sessionId: string) {
 	const [voteSession, setVoteSession] = useState<VoteSession | undefined>();

@@ -1,9 +1,9 @@
-import { createBrowserRouter } from "react-router";
 import { RootLayout } from "@/layouts/root.layout";
+import { InvitePage } from "@/pages/invite";
 import { LandingPage } from "@/pages/landing";
 import { SettingsPage } from "@/pages/settings";
-import { InvitePage } from "@/pages/invite";
 import { RefinementPage } from "@/pages/table";
+import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([
 	{

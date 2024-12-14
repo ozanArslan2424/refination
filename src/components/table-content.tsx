@@ -1,9 +1,9 @@
+import { useResults } from "@/hooks/use-results";
+import { db } from "@/lib/db";
+import type { SessionUser, VoteOptions, VoteSession } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import type { SessionUser, VoteOptions, VoteSession } from "@/lib/types";
 import { toast } from "sonner";
-import { db } from "@/lib/db";
-import { useResults } from "@/hooks/use-results";
 
 export function TableContent({
 	voteSession,
@@ -78,7 +78,7 @@ export function TableContent({
 	}
 
 	return (
-		<div className="grid h-full w-full grid-rows-4 place-items-center rounded-full border-[6px] border-gray-900 bg-gray-800 py-20 shadow-lg *:z-10">
+		<div className="grid h-full w-full grid-rows-4 place-items-center rounded-full border-6 border-gray-900 bg-gray-800 py-20 shadow-lg *:z-10">
 			<div className="h-full w-[80%] place-content-center">
 				<h1 className="text-center font-bold text-4xl text-gray-200">
 					{sessionState === "idle" && "REFINATION"}

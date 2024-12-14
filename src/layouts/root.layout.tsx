@@ -9,8 +9,8 @@ export function RootLayout() {
 					<h2>Refination</h2>
 				</Link>
 				<nav>
-					<Link to="/settings">
-						<button type="button">Settings</button>
+					<Link to="/settings" className="button">
+						Settings
 					</Link>
 				</nav>
 			</header>
