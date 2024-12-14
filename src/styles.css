@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border ring-ring ring-offset-background;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  svg {
+    @apply shrink-0;
+  }
+
+  hr {
+    @apply my-4 border;
+  }
+
+  h1 {
+    @apply text-4xl font-bold tracking-normal;
+  }
+
+  h2 {
+    @apply text-3xl font-bold;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  p {
+    @apply text-base;
+  }
+
+  form {
+    @apply space-y-4;
+  }
+
+  label {
+    @apply block font-semibold;
+  }
+
+  fieldset {
+    @apply space-y-2;
+  }
+
+  input {
+    @apply flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-base ring-offset-background transition file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  button,
+  .button {
+    @apply inline-flex h-max shrink-0 cursor-pointer items-center justify-center border font-semibold tracking-wide transition disabled:cursor-not-allowed disabled:border-transparent disabled:bg-border disabled:bg-opacity-50 disabled:text-muted-foreground disabled:hover:bg-opacity-50 disabled:active:bg-opacity-50;
+
+    &.primary {
+      @apply border-primary bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80;
+    }
+
+    &.secondary {
+      @apply border-secondary bg-secondary text-secondary-foreground hover:bg-secondary/90 active:bg-secondary/80;
+    }
+
+    &.info {
+      @apply border-info bg-info text-info-foreground hover:bg-info/90 active:bg-info/80;
+    }
+
+    &.success {
+      @apply border-success bg-success text-success-foreground hover:bg-success/90 active:bg-success/80;
+    }
+
+    &.warning {
+      @apply border-warning bg-warning text-warning-foreground hover:bg-warning/90 active:bg-warning/80;
+    }
+
+    &.error {
+      @apply border-error bg-error text-error-foreground hover:bg-error/90 active:bg-error/80;
+    }
+
+    &:not(.primary):not(.secondary):not(.info):not(.success):not(.warning):not(
+        .error
+      ) {
+      @apply bg-transparent text-foreground hover:bg-muted/10 active:bg-muted/5;
+    }
+
+    &.sm {
+      @apply rounded-md px-3 py-1 text-sm;
+    }
+
+    &.icon {
+      @apply rounded-md aspect-square h-10 w-10;
+    }
+
+    &:not(.sm):not(.icon) {
+      @apply rounded-md px-4 py-2;
+    }
+
+    svg {
+      @apply pointer-events-none size-4 shrink-0;
+    }
+  }
+}
