@@ -1,8 +1,9 @@
-import { RootLayout } from "@/layouts/root.layout";
-import { InvitePage } from "@/pages/invite";
+import { RootLayout } from "@/layout";
+import { AuthPage } from "@/pages/auth";
+import { DashboardPage } from "@/pages/dashboard";
 import { LandingPage } from "@/pages/landing";
-import { SettingsPage } from "@/pages/settings";
-import { RefinementPage } from "@/pages/table";
+import { TablePage } from "@/pages/table";
+
 import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([
@@ -10,9 +11,9 @@ export const router = createBrowserRouter([
 		Component: RootLayout,
 		children: [
 			{ path: "/", Component: LandingPage },
-			{ path: "/settings", Component: SettingsPage },
-			{ path: "/invite/:sessionId", Component: InvitePage },
-			{ path: "/table/:sessionId", Component: RefinementPage },
+			{ path: "/auth", Component: AuthPage },
+			{ path: "/dashboard", Component: DashboardPage },
+			{ path: "/table/:sessionId", Component: TablePage },
 		],
 	},
 ]);

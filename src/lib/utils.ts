@@ -38,7 +38,7 @@ export async function sendRequest(url: string, options: RequestInit = {}) {
 		return data;
 	} catch (error) {
 		const msg = getErrorMessage(error);
-		console.info("🎣 sendRequest Error:", msg);
+		console.error("🎣 sendRequest Error:", msg);
 	}
 }
 

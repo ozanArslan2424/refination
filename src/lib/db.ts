@@ -3,6 +3,8 @@ import {
 	type DocumentSnapshot,
 	type FirestoreError,
 	type QueryFieldFilterConstraint,
+	arrayRemove,
+	arrayUnion,
 	collection,
 	deleteDoc,
 	doc,
@@ -13,13 +15,14 @@ import {
 	or,
 	orderBy,
 	query,
+	runTransaction,
 	setDoc,
 	updateDoc,
 	where,
 } from "firebase/firestore";
-import type { DocumentData, WithFieldValue } from "firebase/firestore";
+import type { DocumentData, Transaction, WithFieldValue } from "firebase/firestore";
 
-type ColName = "sessions" | "users" | "oldSessions";
+type ColName = "sessions" | "users" | "organizations";
 
 export const db = {
 	get: async <T>(colName: ColName, docName: string) => {
@@ -32,6 +35,7 @@ export const db = {
 
 		return docSnap.data() as T;
 	},
+
 	set: async <T extends WithFieldValue<DocumentData>>(
 		colName: ColName,
 		docName: string,
@@ -40,6 +44,7 @@ export const db = {
 		const docRef = doc(firestore, colName, docName);
 		await setDoc(docRef, data);
 	},
+
 	update: async <T extends WithFieldValue<DocumentData>>(
 		colName: ColName,
 		docName: string,
@@ -48,10 +53,12 @@ export const db = {
 		const docRef = doc(firestore, colName, docName);
 		await updateDoc(docRef, data);
 	},
+
 	delete: async (colName: ColName, docName: string) => {
 		const docRef = doc(firestore, colName, docName);
 		await deleteDoc(docRef);
 	},
+
 	listen: (
 		colName: ColName,
 		docName: string,
@@ -65,19 +72,24 @@ export const db = {
 		return onSnapshot(docRef, observer);
 	},
 
+	runTransaction: (updateFunction: (transaction: Transaction) => Promise<unknown>) =>
+		runTransaction(firestore, updateFunction),
+
+	ref: (colName: ColName, docName: string) => doc(firestore, colName, docName),
+
 	findFirst: async <T>(colName: ColName, filter: QueryFieldFilterConstraint) => {
 		const colRef = collection(firestore, colName);
 		const q = query(colRef, filter, limit(1));
 		const querySnap = await getDocs(q);
 
 		if (querySnap.empty) {
-			console.log("No matching documents.");
 			return null;
 		}
 
 		const doc = querySnap.docs[0];
 		return { id: doc.id, ...doc.data() } as T;
 	},
+
 	findMany: async <T>(colName: ColName, filter: QueryFieldFilterConstraint, limitCount: number) => {
 		const colRef = collection(firestore, colName);
 		const q = query(colRef, filter, limit(limitCount));
@@ -94,6 +106,11 @@ export const db = {
 		})) as T[];
 		return docs;
 	},
+
+	arrayRemove: arrayRemove,
+
+	arrayUnion: arrayUnion,
+
 	filters: {
 		eq: where,
 		or: or,

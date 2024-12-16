@@ -1,4 +1,4 @@
-import type { VoteSession } from "@/lib/types";
+import type { VoteSession } from "@/lib/schemas";
 import { useMemo } from "react";
 
 export function useResults(users: VoteSession["users"]) {

@@ -1,5 +1,5 @@
 import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { z } from "zod";
@@ -24,7 +24,8 @@ const firebaseConfig = z
 		measurementId: import.meta.env.VITE_FB_MEASUREMENT_ID,
 	});
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+
 const analytics = getAnalytics(app);
 
 const firestore = getFirestore(app);
