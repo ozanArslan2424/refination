@@ -1,6 +1,6 @@
 import type { SessionUser, VoteSession } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export function UserCircle({
 	voteSession,
@@ -22,22 +22,21 @@ export function UserCircle({
 		});
 	}, [users]);
 
-	function renderUserAvatar(
-		state: VoteSession["state"],
-		vote: SessionUser["vote"],
-		isCurrentUser: boolean,
-	) {
-		switch (state) {
-			case "idle":
-				return isCurrentUser ? "🫵" : "😅";
-			case "voting":
-				return vote === "X" ? "🤔" : "🤫";
-			case "results":
-				return vote;
-			default:
-				return "🤷";
-		}
-	}
+	const renderUserAvatar = useCallback(
+		(state: VoteSession["state"], vote: SessionUser["vote"], isCurrentUser: boolean) => {
+			switch (state) {
+				case "idle":
+					return isCurrentUser ? "🫵" : "😅";
+				case "voting":
+					return vote === "X" ? "🤔" : "🤫";
+				case "results":
+					return vote;
+				default:
+					return "🤷";
+			}
+		},
+		[],
+	);
 
 	return (
 		<div className="relative aspect-square min-w-[480px]">

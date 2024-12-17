@@ -1,37 +1,37 @@
 {
-  "name": "tabula-refination",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "bunx --bun vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "format": "bunx biome format --write .",
-    "lint": "bunx biome lint .",
-    "check": "bunx biome check ."
-  },
-  "devDependencies": {
-    "@types/bun": "^1.1.14",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@biomejs/biome": "1.9.4",
-    "vite": "^6.0.3",
-    "vite-tsconfig-paths": "^5.1.4"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.0.0-beta.7",
-    "clsx": "^2.1.1",
-    "firebase": "^11.1.0",
-    "react": "^19.0.0",
-    "react-confetti": "^6.1.0",
-    "react-dom": "^19.0.0",
-    "react-router": "^7.0.2",
-    "sonner": "^1.7.1",
-    "tailwind-merge": "^2.5.5",
-    "tailwindcss": "^4.0.0-beta.7",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
-  }
+	"name": "tabula-refination",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "bunx --bun vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"format": "bunx biome format --write .",
+		"lint": "bunx biome lint .",
+		"check": "bunx biome check ."
+	},
+	"devDependencies": {
+		"@types/bun": "^1.1.14",
+		"@types/react": "^19.0.1",
+		"@types/react-dom": "^19.0.2",
+		"@vitejs/plugin-react": "^4.3.4",
+		"@biomejs/biome": "1.9.4",
+		"vite": "^6.0.3",
+		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "^4.0.0-beta.7",
+		"clsx": "^2.1.1",
+		"firebase": "^11.1.0",
+		"react": "^19.0.0",
+		"react-confetti": "^6.1.0",
+		"react-dom": "^19.0.0",
+		"react-router": "^7.0.2",
+		"sonner": "^1.7.1",
+		"tailwind-merge": "^2.5.5",
+		"tailwindcss": "^4.0.0-beta.7",
+		"tailwindcss-animate": "^1.0.7",
+		"zod": "^3.24.1"
+	}
 }

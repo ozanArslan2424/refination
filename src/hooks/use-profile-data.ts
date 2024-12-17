@@ -18,6 +18,7 @@ export function useProfileData(userId: string | undefined) {
 					setIsPending(false);
 					throw new Error("No user ID provided");
 				}
+
 				const userData = await db.get<DatabaseUser>("users", userId);
 				if (!userData) {
 					setIsPending(false);
@@ -41,5 +42,5 @@ export function useProfileData(userId: string | undefined) {
 		fetchProfileData();
 	}, [userId]);
 
-	return { profileData, isPending: isPending };
+	return { profileData, isPending };
 }

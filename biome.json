@@ -22,7 +22,8 @@
 		"rules": {
 			"recommended": true,
 			"a11y": {
-				"all": true
+				"all": true,
+				"noSvgWithoutTitle": "off"
 			},
 			"correctness": {
 				"all": true,

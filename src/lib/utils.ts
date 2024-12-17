@@ -26,22 +26,6 @@ export function getErrorMessage(error: unknown) {
 	return message;
 }
 
-export async function sendRequest(url: string, options: RequestInit = {}) {
-	try {
-		const res = await fetch(url, options);
-		const data = await res.json();
-
-		if (!res.ok) {
-			throw new Error(data.message);
-		}
-
-		return data;
-	} catch (error) {
-		const msg = getErrorMessage(error);
-		console.error("🎣 sendRequest Error:", msg);
-	}
-}
-
 export function toReadableDate(date: string | number | Date) {
 	const d = new Date(date);
 	const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {

@@ -1,59 +1,67 @@
 import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import type { FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { CreateProfileForm } from "./create-profile-form";
 
 export function RegisterForm() {
-	const navigate = useNavigate();
+  const [step, setStep] = useState<"register" | "profile">("register");
 
-	async function handleRegister(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		const formData = new FormData(e.currentTarget);
-		const formValues = Object.fromEntries(formData.entries());
+  async function handleRegister(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
 
-		const { data, error } = z
-			.object({
-				email: z.string({ message: "Email required" }).email("Invalid email"),
-				password: z
-					.string({ message: "Password required" })
-					.min(6, "Password must be at least 6 characters long"),
-			})
-			.safeParse(formValues);
+    const { data, error } = z
+      .object({
+        email: z.string({ message: "Email required" }).email("Invalid email"),
+        password: z
+          .string({ message: "Password required" })
+          .min(6, "Password must be at least 6 characters long"),
+      })
+      .safeParse(formValues);
 
-		if (error) {
-			const errors = error.flatten().fieldErrors;
-			toast.error(errors.email);
-			toast.error(errors.password);
-			return;
-		}
+    if (error) {
+      const errors = error.flatten().fieldErrors;
+      toast.error(errors.email);
+      toast.error(errors.password);
+      return;
+    }
 
-		const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
+    const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
 
-		if (res.user) {
-			toast.success("Account created successfully");
-			navigate("/dashboard");
-		} else {
-			toast.error("Failed to create account");
-		}
-	}
+    if (res.user) {
+      toast.success("Account created successfully");
+      setStep("profile");
+    } else {
+      toast.error("Failed to create account");
+    }
+  }
 
-	return (
-		<form onSubmit={handleRegister} className="p-4">
-			<fieldset>
-				<label htmlFor="email">Email</label>
-				<input type="email" id="email" name="email" />
-			</fieldset>
+  if (step === "profile") {
+    if (!auth.currentUser) {
+      return <p className="text-red-500">Not logged in</p>;
+    }
 
-			<fieldset>
-				<label htmlFor="password">Password</label>
-				<input type="password" id="password" name="password" />
-			</fieldset>
+    return <CreateProfileForm authUser={auth.currentUser} />;
+  }
 
-			<button className="primary" type="submit">
-				Register
-			</button>
-		</form>
-	);
+  return (
+    <form onSubmit={handleRegister} className="p-4">
+      <fieldset>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="email" name="email" />
+      </fieldset>
+
+      <fieldset>
+        <label htmlFor="password">Password</label>
+        <input type="password" id="password" name="password" />
+      </fieldset>
+
+      <button className="primary" type="submit">
+        Register
+      </button>
+    </form>
+  );
 }
