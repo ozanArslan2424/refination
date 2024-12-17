@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router";
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
-	throw new Error("Root element NOT found");
+  throw new Error("Root element NOT found");
 }
 
 const root = reactDom.createRoot(rootElement);

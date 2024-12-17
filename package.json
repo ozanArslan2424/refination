@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "format": "bunx biome format --write .",
     "lint": "bunx biome lint .",
-    "check": "bunx biome check ."
+    "check": "bunx biome check .",
+    "compilestyles": "tailwindcss -i ./src/global-styles.css -o ./src/styles.css",
+    "start": "tailwindcss -i ./src/global-styles.css -o ./src/styles.css && vite build && vite preview"
   },
   "devDependencies": {
     "@types/bun": "^1.1.14",
@@ -21,6 +23,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.0-beta.8",
     "@tailwindcss/vite": "^4.0.0-beta.7",
     "clsx": "^2.1.1",
     "firebase": "^11.1.0",

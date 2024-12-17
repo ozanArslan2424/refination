@@ -12,6 +12,8 @@ dist/
 .netlify
 .wrangler
 
+src/global-styles.css
+
 # IDE
 .vscode/*
 !.vscode/extensions.json
