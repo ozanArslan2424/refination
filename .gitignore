@@ -12,7 +12,7 @@ dist/
 .netlify
 .wrangler
 
-src/global-styles.css
+src/compiled.css
 
 # IDE
 .vscode/*
