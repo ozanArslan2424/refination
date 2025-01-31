@@ -1,42 +1,42 @@
-import type { SessionUser, VoteSession } from "@/lib/schemas";
-import { cn } from "@/lib/utils";
-import { useCallback, useMemo } from "react";
+import type { SessionUser, VoteSession } from "@/lib/schemas"
+import { cn } from "@/lib/utils"
+import { useCallback, useMemo } from "react"
 
 export function UserCircle({
 	voteSession,
 	currentUser,
 }: {
-	voteSession: VoteSession;
-	currentUser: SessionUser;
+	voteSession: VoteSession
+	currentUser: SessionUser
 }) {
-	const { users } = voteSession;
+	const { users } = voteSession
 
 	const userPositions = useMemo(() => {
-		const angleStep = (2 * Math.PI) / users.length;
+		const angleStep = (2 * Math.PI) / users.length
 
 		return users.map((_, index) => {
-			const angle = index * angleStep;
-			const x = Number.parseFloat((50 + 65 * Math.cos(angle)).toFixed(1));
-			const y = Number.parseFloat((50 + 65 * Math.sin(angle)).toFixed(1));
-			return { x, y };
-		});
-	}, [users]);
+			const angle = index * angleStep
+			const x = Number.parseFloat((50 + 65 * Math.cos(angle)).toFixed(1))
+			const y = Number.parseFloat((50 + 65 * Math.sin(angle)).toFixed(1))
+			return { x, y }
+		})
+	}, [users])
 
 	const renderUserAvatar = useCallback(
 		(state: VoteSession["state"], vote: SessionUser["vote"], isCurrentUser: boolean) => {
 			switch (state) {
 				case "idle":
-					return isCurrentUser ? "🫵" : "😅";
+					return isCurrentUser ? "🫵" : "😅"
 				case "voting":
-					return vote === "X" ? "🤔" : "🤫";
+					return vote === "X" ? "🤔" : "🤫"
 				case "results":
-					return vote;
+					return vote
 				default:
-					return "🤷";
+					return "🤷"
 			}
 		},
 		[],
-	);
+	)
 
 	return (
 		<div className="relative aspect-square min-w-[480px]">
@@ -66,12 +66,12 @@ export function UserCircle({
 							{renderUserAvatar(voteSession.state, user.vote, currentUser.id === user.id)}
 						</span>
 
-						<span className="translate-center -bottom-10 absolute left-1/2 h-max w-max rounded-full bg-sky-100 px-2.5 py-0.5 font-semibold text-lg text-sky-700">
+						<span className="translate-center absolute -bottom-10 left-1/2 h-max w-max rounded-full bg-sky-100 px-2.5 py-0.5 text-lg font-semibold text-sky-700">
 							<span>{user.name}</span>
 						</span>
 					</div>
 				</div>
 			))}
 		</div>
-	);
+	)
 }

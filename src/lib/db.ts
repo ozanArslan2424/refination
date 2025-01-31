@@ -1,4 +1,4 @@
-import { firestore } from "@/lib/firebase";
+import { firestore } from "@/lib/firebase"
 import {
 	type DocumentSnapshot,
 	type FirestoreError,
@@ -19,21 +19,21 @@ import {
 	setDoc,
 	updateDoc,
 	where,
-} from "firebase/firestore";
-import type { DocumentData, Transaction, WithFieldValue } from "firebase/firestore";
+} from "firebase/firestore"
+import type { DocumentData, Transaction, WithFieldValue } from "firebase/firestore"
 
-type ColName = "sessions" | "users" | "organizations";
+type ColName = "sessions" | "users" | "organizations"
 
 export const db = {
 	get: async <T>(colName: ColName, docName: string) => {
-		const docRef = doc(firestore, colName, docName);
-		const docSnap = await getDoc(docRef);
+		const docRef = doc(firestore, colName, docName)
+		const docSnap = await getDoc(docRef)
 
 		if (!docSnap.exists()) {
-			return null;
+			return null
 		}
 
-		return docSnap.data() as T;
+		return docSnap.data() as T
 	},
 
 	set: async <T extends WithFieldValue<DocumentData>>(
@@ -41,8 +41,8 @@ export const db = {
 		docName: string,
 		data: T,
 	) => {
-		const docRef = doc(firestore, colName, docName);
-		await setDoc(docRef, data);
+		const docRef = doc(firestore, colName, docName)
+		await setDoc(docRef, data)
 	},
 
 	update: async <T extends WithFieldValue<DocumentData>>(
@@ -50,26 +50,26 @@ export const db = {
 		docName: string,
 		data: T,
 	) => {
-		const docRef = doc(firestore, colName, docName);
-		await updateDoc(docRef, data);
+		const docRef = doc(firestore, colName, docName)
+		await updateDoc(docRef, data)
 	},
 
 	delete: async (colName: ColName, docName: string) => {
-		const docRef = doc(firestore, colName, docName);
-		await deleteDoc(docRef);
+		const docRef = doc(firestore, colName, docName)
+		await deleteDoc(docRef)
 	},
 
 	listen: (
 		colName: ColName,
 		docName: string,
 		observer: {
-			next?: ((snapshot: DocumentSnapshot<DocumentData, DocumentData>) => void) | undefined;
-			error?: (error: FirestoreError) => void;
-			complete?: () => void;
+			next?: ((snapshot: DocumentSnapshot<DocumentData, DocumentData>) => void) | undefined
+			error?: (error: FirestoreError) => void
+			complete?: () => void
 		},
 	) => {
-		const docRef = doc(firestore, colName, docName);
-		return onSnapshot(docRef, observer);
+		const docRef = doc(firestore, colName, docName)
+		return onSnapshot(docRef, observer)
 	},
 
 	runTransaction: (updateFunction: (transaction: Transaction) => Promise<unknown>) =>
@@ -78,33 +78,32 @@ export const db = {
 	ref: (colName: ColName, docName: string) => doc(firestore, colName, docName),
 
 	findFirst: async <T>(colName: ColName, filter: QueryFieldFilterConstraint) => {
-		const colRef = collection(firestore, colName);
-		const q = query(colRef, filter, limit(1));
-		const querySnap = await getDocs(q);
+		const colRef = collection(firestore, colName)
+		const q = query(colRef, filter, limit(1))
+		const querySnap = await getDocs(q)
 
 		if (querySnap.empty) {
-			return null;
+			throw new Error("No matching documents")
 		}
 
-		const doc = querySnap.docs[0];
-		return { id: doc.id, ...doc.data() } as T;
+		const doc = querySnap.docs[0]
+		return { id: doc.id, ...doc.data() } as T
 	},
 
 	findMany: async <T>(colName: ColName, filter: QueryFieldFilterConstraint, limitCount: number) => {
-		const colRef = collection(firestore, colName);
-		const q = query(colRef, filter, limit(limitCount));
-		const querySnap = await getDocs(q);
+		const colRef = collection(firestore, colName)
+		const q = query(colRef, filter, limit(limitCount))
+		const querySnap = await getDocs(q)
 
 		if (querySnap.empty) {
-			console.log("No matching documents.");
-			return null;
+			throw new Error("No matching documents")
 		}
 
 		const docs = querySnap.docs.map((doc) => ({
 			id: doc.id,
 			...doc.data(),
-		})) as T[];
-		return docs;
+		})) as T[]
+		return docs
 	},
 
 	arrayRemove: arrayRemove,
@@ -116,4 +115,4 @@ export const db = {
 		or: or,
 		order: orderBy,
 	},
-};
+}

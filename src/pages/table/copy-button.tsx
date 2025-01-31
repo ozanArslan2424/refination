@@ -1,14 +1,14 @@
-import { CheckIcon, CopyIcon } from "@/components/icons";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { CheckIcon, CopyIcon } from "@/components/icons"
+import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 export function CopyButton({ value, text }: { value: string; text: string }) {
-	const [copied, setCopied] = useState<boolean>(false);
+	const [copied, setCopied] = useState<boolean>(false)
 
 	function handleCopy() {
-		navigator.clipboard.writeText(value);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 1500);
+		navigator.clipboard.writeText(value)
+		setCopied(true)
+		setTimeout(() => setCopied(false), 1500)
 	}
 
 	return (
@@ -38,5 +38,5 @@ export function CopyButton({ value, text }: { value: string; text: string }) {
 				/>
 			</div>
 		</button>
-	);
+	)
 }

@@ -1,100 +1,47 @@
-import { db } from "@/lib/db";
-import type {
-	Organization,
-	SessionUser,
-	VoteOptions,
-	VoteSession,
-	VoteSessionResult,
-} from "@/lib/schemas";
-import { arrayUnion } from "firebase/firestore";
-import { useCallback, useState } from "react";
-import { toast } from "sonner";
+import type { VoteOptions, VoteSession } from "@/lib/schemas"
+import { useMemo } from "react"
 
-export function useVoting(voteSession: VoteSession, currentUser: SessionUser) {
-	const [selectedVote, setSelectedVote] = useState<VoteOptions>("X");
+export function useResults(voteSession: VoteSession) {
+	return useMemo(() => {
+		const votedUsers = voteSession.users.filter((user) => user.vote !== "X")
 
-	const handleVote = useCallback(
-		async (vote: VoteOptions) => {
-			if (selectedVote === vote) return;
-
-			setSelectedVote(vote);
-
-			try {
-				await db.runTransaction(async (transaction) => {
-					const sessionRef = db.ref("sessions", voteSession.id);
-					const sessionDoc = await transaction.get(sessionRef);
-					if (!sessionDoc.exists()) {
-						throw new Error("Session does not exist!");
-					}
-					const sessionData = sessionDoc.data() as VoteSession;
-					const updatedUsers = sessionData.users.map((user) =>
-						user.id === currentUser.id ? { ...user, vote } : user,
-					);
-					transaction.update(sessionRef, { users: updatedUsers });
-				});
-			} catch {
-				toast.error("Failed to cast vote");
-				setSelectedVote("X");
-			}
-		},
-		[selectedVote, voteSession.id, currentUser.id],
-	);
-
-	const startVoting = useCallback(async (voteSession: VoteSession) => {
-		const promise = db.update<Partial<VoteSession>>("sessions", voteSession.id, {
-			state: "voting",
-			results: {
-				aggreement: 0,
-				average: 0,
-				votes: [],
+		const agreementRate = votedUsers.reduce(
+			(acc, user) => {
+				const voteValue = user.vote === "X" ? 0 : Number.parseInt(user.vote, 10)
+				acc[voteValue] = (acc[voteValue] || 0) + 1
+				return acc
 			},
-			users: voteSession.users.map((user) => ({
-				...user,
-				vote: "X",
-			})),
-		});
+			{} as Record<number, number>,
+		)
 
-		await promise;
+		const mostSelectedVote = Object.entries(agreementRate).reduce(
+			(max, [vote, count]) =>
+				count > max.count ? { vote: Number.parseInt(vote, 10), count } : max,
+			{ vote: 0, count: 0 },
+		)
 
-		toast.promise(promise, {
-			loading: "Starting new vote...",
-			success: "Started!",
-			error: "Failed to start new vote",
-		});
-	}, []);
+		const totalVotes = votedUsers.reduce(
+			(sum, user) => sum + (user.vote === "X" ? 0 : Number.parseInt(user.vote, 10)),
+			0,
+		)
 
-	const startVotingAgain = useCallback(
-		async (voteSession: VoteSession, results: VoteSessionResult, orgId: string) => {
-			const resultedSessionId = crypto.randomUUID();
-			const promise = Promise.all([
-				db.set<VoteSession>("sessions", resultedSessionId, {
-					id: resultedSessionId,
-					orgId: voteSession.orgId,
-					results,
-					state: "closed",
-					users: voteSession.users,
-				}),
-				db.update<Partial<VoteSession>>("sessions", voteSession.id, {
-					state: "voting",
-					results: {
-						aggreement: 0,
-						average: 0,
-						votes: [],
-					},
-					users: voteSession.users.map((user) => ({
-						...user,
-						vote: "X",
-					})),
-				}),
-				db.update<Partial<Organization>>("organizations", orgId, {
-					sessionIds: arrayUnion(resultedSessionId),
-				}),
-			]);
+		const arithmeticMean = Math.round(totalVotes / voteSession.users.length)
+		const predefinedValues = [0, 3, 5, 8, 13, 21]
+		const average = predefinedValues.reduce((prev, curr) =>
+			Math.abs(curr - arithmeticMean) < Math.abs(prev - arithmeticMean) ? curr : prev,
+		)
 
-			await promise;
-		},
-		[],
-	);
+		const percentage = Math.round((mostSelectedVote.count / voteSession.users.length) * 100)
 
-	return { selectedVote, handleVote, startVoting, startVotingAgain, setSelectedVote };
+		const votesCount = Object.entries(agreementRate)
+			.filter(([vote]) => vote !== "0")
+			.map(([vote, count]) => ({ vote: vote as VoteOptions, count }))
+
+		return {
+			average,
+			agreement: percentage,
+			votesCount,
+			votes: votesCount.map(({ vote }) => vote.toString() as VoteOptions),
+		}
+	}, [voteSession.users])
 }

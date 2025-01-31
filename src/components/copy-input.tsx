@@ -1,20 +1,20 @@
-import { CheckIcon, CopyIcon } from "@/components/icons";
-import { cn } from "@/lib/utils";
-import { type ComponentProps, useRef, useState } from "react";
+import { CheckIcon, CopyIcon } from "@/components/icons"
+import { cn } from "@/lib/utils"
+import { type ComponentProps, useRef, useState } from "react"
 
 export function CopyInput({
 	copyId,
 	className,
 	...rest
 }: ComponentProps<"input"> & { copyId?: HTMLButtonElement["id"] }) {
-	const [copied, setCopied] = useState<boolean>(false);
-	const inputRef = useRef<HTMLInputElement>(null);
+	const [copied, setCopied] = useState<boolean>(false)
+	const inputRef = useRef<HTMLInputElement>(null)
 
 	function handleCopy() {
 		if (inputRef.current) {
-			navigator.clipboard.writeText(inputRef.current.value);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 1500);
+			navigator.clipboard.writeText(inputRef.current.value)
+			setCopied(true)
+			setTimeout(() => setCopied(false), 1500)
 		}
 	}
 
@@ -33,9 +33,9 @@ export function CopyInput({
 				onClick={handleCopy}
 				className={cn(
 					"default",
-					"absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md border border-transparent text-muted-foreground transition-colors duration-75",
+					"text-muted-foreground absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md border border-transparent transition-colors duration-75",
 					"hover:text-foreground",
-					"focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0",
+					"focus-visible:text-foreground focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:outline-none",
 					"disabled:pointer-events-none disabled:cursor-not-allowed",
 				)}
 				aria-label={copied ? "Copied" : "Copy to clipboard"}
@@ -62,5 +62,5 @@ export function CopyInput({
 				</div>
 			</button>
 		</div>
-	);
+	)
 }

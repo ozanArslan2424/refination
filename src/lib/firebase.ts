@@ -1,8 +1,8 @@
-import { getAnalytics } from "firebase/analytics";
-import { getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { z } from "zod";
+import { getAnalytics } from "firebase/analytics"
+import { getApps, initializeApp } from "firebase/app"
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
+import { z } from "zod"
 
 const firebaseConfig = z
 	.object({
@@ -22,13 +22,13 @@ const firebaseConfig = z
 		messagingSenderId: import.meta.env.VITE_FB_MESSAGING_SENDER_ID,
 		appId: import.meta.env.VITE_FB_APP_ID,
 		measurementId: import.meta.env.VITE_FB_MEASUREMENT_ID,
-	});
+	})
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
 
-const analytics = getAnalytics(app);
+const analytics = getAnalytics(app)
 
-const firestore = getFirestore(app);
-const auth = getAuth(app);
+const firestore = getFirestore(app)
+const auth = getAuth(app)
 
-export { firestore, auth, analytics };
+export { firestore, auth, analytics }

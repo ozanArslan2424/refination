@@ -1,17 +1,17 @@
-import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import type { FormEvent } from "react";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { z } from "zod";
+import { auth } from "@/lib/firebase"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import type { FormEvent } from "react"
+import { useNavigate } from "react-router"
+import { toast } from "sonner"
+import { z } from "zod"
 
 export function LoginForm() {
-	const navigate = useNavigate();
+	const navigate = useNavigate()
 
 	async function handleLogin(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		const formData = new FormData(e.currentTarget);
-		const formValues = Object.fromEntries(formData.entries());
+		e.preventDefault()
+		const formData = new FormData(e.currentTarget)
+		const formValues = Object.fromEntries(formData.entries())
 
 		const { data, error } = z
 			.object({
@@ -20,22 +20,22 @@ export function LoginForm() {
 					.string({ message: "Password required" })
 					.min(6, "Password must be at least 6 characters long"),
 			})
-			.safeParse(formValues);
+			.safeParse(formValues)
 
 		if (error) {
-			const errors = error.flatten().fieldErrors;
-			toast.error(errors.email);
-			toast.error(errors.password);
-			return;
+			const errors = error.flatten().fieldErrors
+			toast.error(errors.email)
+			toast.error(errors.password)
+			return
 		}
 
-		const res = await signInWithEmailAndPassword(auth, data.email, data.password);
+		const res = await signInWithEmailAndPassword(auth, data.email, data.password)
 
 		if (res.user) {
-			toast.success("Account created successfully");
-			navigate("/dashboard");
+			toast.success("Account created successfully")
+			navigate("/dash")
 		} else {
-			toast.error("Failed to create account");
+			toast.error("Failed to create account")
 		}
 	}
 
@@ -55,5 +55,5 @@ export function LoginForm() {
 				Login
 			</button>
 		</form>
-	);
+	)
 }

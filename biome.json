@@ -18,6 +18,7 @@
 		"enabled": true
 	},
 	"linter": {
+		"ignore": ["node_modules", "./src/compiled.css"],
 		"enabled": true,
 		"rules": {
 			"recommended": true,
