@@ -58,9 +58,9 @@ export function UserCircle({
 							currentUser.id === user.id && "border-emerald-700 bg-emerald-700",
 						)}
 					>
-						{user.role === "manager" && (
+						{/* {user.role === "manager" && (
 							<span className="translate-center absolute top-0 left-1/2 z-2 text-5xl">👑</span>
-						)}
+						)} */}
 
 						<span className="absolute-center text-6xl text-stone-100">
 							{renderUserAvatar(voteSession.state, user.vote, currentUser.id === user.id)}

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Confetti from "react-confetti"
-import { useResults } from "@/pages/table/use-voting"
+import { useResults } from "@/pages/table/use-results"
 import { db } from "@/lib/db"
 import type { SessionUser, VoteOptions, VoteSession, VoteSessionResult } from "@/lib/schemas"
 import { cn } from "@/lib/utils"
