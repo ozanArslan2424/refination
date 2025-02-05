@@ -99,7 +99,7 @@ export function TableContent({
 	if (voteSession.state === "results") {
 		return (
 			<ResultsView
-				results={voteSession.results}
+				results={results}
 				showConfetti={showConfetti}
 				stopConfetti={() => setShowConfetti(false)}
 				startVotingAgain={startVoting}
