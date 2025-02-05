@@ -98,12 +98,21 @@ export function TableContent({
 
 	if (voteSession.state === "results") {
 		return (
-			<ResultsView
-				results={results}
-				showConfetti={showConfetti}
-				stopConfetti={() => setShowConfetti(false)}
-				startVotingAgain={startVoting}
-			/>
+			<>
+				{showConfetti && (
+					<Confetti
+						numberOfPieces={10 * results.agreement}
+						run={showConfetti}
+						onConfettiComplete={() => setShowConfetti(false)}
+						initialVelocityY={20}
+						initialVelocityX={20}
+						recycle={false}
+						className="absolute inset-0"
+					/>
+				)}
+
+				<ResultsView results={results} startVotingAgain={startVoting} />
+			</>
 		)
 	}
 
@@ -130,13 +139,9 @@ function ClosedView() {
 
 function ResultsView({
 	results,
-	showConfetti,
-	stopConfetti,
 	startVotingAgain,
 }: {
 	results: VoteSessionResult
-	showConfetti: boolean
-	stopConfetti: () => void
 	startVotingAgain: () => void
 }) {
 	return (
@@ -155,17 +160,6 @@ function ResultsView({
 						</div>
 					))}
 				</div>
-				{showConfetti && (
-					<Confetti
-						numberOfPieces={10 * results.agreement}
-						run={showConfetti}
-						onConfettiComplete={stopConfetti}
-						initialVelocityY={20}
-						initialVelocityX={20}
-						recycle={false}
-						className="absolute inset-0"
-					/>
-				)}
 			</div>
 			<div className="table-content-middle">
 				<div className="flex gap-4">
