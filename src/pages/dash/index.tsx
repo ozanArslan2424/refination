@@ -1,11 +1,11 @@
+import { UsernameForm } from "@/components/username-form"
 import { db } from "@/lib/db"
+import { VoteSession } from "@/lib/schemas"
+import { getErrorMessage } from "@/lib/utils"
+import { arrayUnion } from "firebase/firestore"
 import { FormEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { VoteSession } from "@/lib/schemas"
-import { UsernameForm } from "@/components/username-form"
-import { getErrorMessage } from "@/lib/utils"
 import { toast } from "sonner"
-import { arrayUnion } from "firebase/firestore"
 
 export function DashboardPage() {
 	const navigate = useNavigate()
@@ -48,7 +48,12 @@ export function DashboardPage() {
 
 		try {
 			if (existingUser) {
-				await db.update("users", existingUser.id, { name })
+				const user = await db.get("users", existingUser.id)
+				if (user) {
+					await db.update("users", existingUser.id, { name })
+				} else {
+					await db.set("users", userId, { id: userId, name })
+				}
 			} else {
 				await db.set("users", userId, { id: userId, name })
 			}

@@ -24,7 +24,12 @@ export function UsernameForm({
 
 		try {
 			if (existingUser) {
-				await db.update("users", existingUser.id, { name })
+				const user = await db.get("users", existingUser.id)
+				if (user) {
+					await db.update("users", existingUser.id, { name })
+				} else {
+					await db.set("users", userId, { id: userId, name })
+				}
 			} else {
 				await db.set("users", userId, { id: userId, name })
 			}

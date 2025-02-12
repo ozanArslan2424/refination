@@ -35,6 +35,12 @@ export function TableContent({
 				)
 				transaction.update(sessionRef, { users: updatedUsers })
 			})
+
+			// db.update<Partial<VoteSession>>("sessions", voteSession.id, {
+			// 	users: voteSession.users.map((user) =>
+			// 		user.id === currentUser.id ? { ...user, vote } : user,
+			// 	),
+			// })
 		} catch {
 			toast.error("Failed to cast vote")
 			setSelectedVote("X")
